@@ -16,7 +16,7 @@
 #include "history_list.h"
 #include "FreeRTOS_CLI.h"
 #include "common.h"
-#include "shell_portable.h"
+#include "portable/shell_portable.h"
 
 #define SHOW_PASSWORD	0
 
@@ -244,7 +244,10 @@ static lbuff_e shell_MngtLineBuff(shell_t* shell,const char* str, uint32_t str_l
 			shell->write("\r",1,shell->param);
 			shell_write_prompt(shell);
 
-			shell->write(shell->line_buff,strlen(shell->line_buff),shell->param);
+			if(strlen(shell->line_buff)){
+				shell->write(shell->line_buff,strlen(shell->line_buff),shell->param);
+			}
+
 
 			uint32_t temp2 = line_buff_len - curr_pos_temp;
 			while(temp2--){
